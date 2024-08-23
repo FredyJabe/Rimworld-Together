@@ -1,5 +1,7 @@
-﻿using RimWorld;
+﻿using System.Collections.Generic;
+using RimWorld;
 using Shared;
+using Verse;
 using static Shared.CommonEnumerators;
 
 namespace GameClient
@@ -30,6 +32,10 @@ namespace GameClient
 
                 case CommandMode.ForceSave:
                     OnForceSaveCommand();
+                    break;
+
+                case CommandMode.SpawnThing:
+                    OnSpawnThingCommand(commandData);
                     break;
             }
         }
@@ -62,6 +68,38 @@ namespace GameClient
             {
                 ClientValues.SetIntentionalDisconnect(true, DisconnectionManager.DCReason.SaveQuitToMenu);
                 SaveManager.ForceSave();
+            }
+        }
+
+        private static void OnSpawnThingCommand(CommandData commandData)
+        {
+            string message = "Received items from the server:\n\n";
+            string[] thingsToSpawn = commandData.commandDetails.Split('/');
+            List<Thing> things = new();
+
+            foreach(string s in thingsToSpawn)
+            {
+                string[] thingParams = s.Split('|');
+                ThingDef thingToSpawn = DefDatabase<ThingDef>.GetNamed(thingParams[0]);
+
+                if (thingToSpawn != null)
+                {
+                    ThingData thingData = new ThingData();
+                    thingData.defName = thingToSpawn.defName;
+                    thingData.quantity = int.Parse(thingParams[1]);
+                    thingData.quality = "null";
+                    thingData.hitpoints = thingToSpawn.BaseMaxHitPoints;
+
+                    things.Add(ThingScribeManager.StringToItem(thingData));
+
+                    message += $"{thingData.defName} x{thingData.quantity}\n";
+                }
+            }
+
+            if (things.Count > 0)
+            {
+                TransferManager.GetTransferedItemsToSettlement(things.ToArray(), true, false, false, true);
+                RimworldManager.GenerateLetter("Received items", message, LetterDefOf.PositiveEvent);
             }
         }
     }

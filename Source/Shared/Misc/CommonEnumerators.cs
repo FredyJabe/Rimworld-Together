@@ -6,7 +6,7 @@ namespace Shared
 
         public enum LogMode { Message, Warning, Error, Title }
 
-        public enum CommandMode { Op, Deop, Broadcast, ForceSave }
+        public enum CommandMode { Op, Deop, Broadcast, ForceSave, SpawnThing }
 
         public enum EventStepMode { Send, Receive, Recover }
 

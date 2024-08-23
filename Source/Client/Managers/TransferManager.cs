@@ -187,17 +187,18 @@ namespace GameClient
 
         //Receives the transfered items into the settlement
 
-        public static void GetTransferedItemsToSettlement(Thing[] things, bool success = true, bool customMap = true, bool invokeMessage = true)
+        public static void GetTransferedItemsToSettlement(Thing[] things, bool success = true, bool customMap = true, bool invokeMessage = true, bool fromServer = false)
         {
             Action r1 = delegate
             {
-                Map map = null;
+                Map? map = null;
                 if (customMap) map = Find.Maps.Find(x => x.Tile == ClientValues.incomingManifest.toTile);
                 else map = Find.AnyPlayerHomeMap;
 
                 foreach (Thing thing in things)
                 {
-                    thing.SetFactionDirect(Faction.OfPlayer);
+                    if (!fromServer) thing.SetFactionDirect(Faction.OfPlayer);
+
                     RimworldManager.PlaceThingIntoMap(thing, map, ThingPlaceMode.Near, true);
                 }
 

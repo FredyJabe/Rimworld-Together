@@ -75,5 +75,15 @@ namespace GameServer
             Packet packet = Packet.CreatePacketFromObject(nameof(PacketHandler.CommandPacket), commandData);
             client.listener.EnqueuePacket(packet);
         }
+
+        public static void SpawnThingCommand(ServerClient client, string thingDefName, int amount)
+        {
+            CommandData commandData = new CommandData();
+            commandData.commandMode = CommandMode.SpawnThing;
+            commandData.commandDetails = $"{thingDefName}|{amount}";
+
+            Packet packet = Packet.CreatePacketFromObject(nameof(PacketHandler.CommandPacket), commandData);
+            client.listener.EnqueuePacket(packet);
+        }
     }
 }

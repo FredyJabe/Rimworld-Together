@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Shared
 {
@@ -40,5 +41,41 @@ namespace Shared
         public int PersonalFoodProcessorCost = 1000;
         public int FactionFoodProcessorCost = 2000;
         public int FoodProcessorRewardCount = 50;
+
+
+        public float PersonalCostMultiplier = 1.0f;
+        public float FactionCostMultipliser = 5.0f;
+        public List<PlayerSite> Sites = new()
+        {
+            new("Farmland", new(){{"Silver",1000}}, new(){{"Potato",50}}),
+            new("Quarry", new(){{"Silver",1000}}, new(){{"Steel",50}}),
+            new("Sawmill", new(){{"Silver",1000}}, new(){{"WoodLog",50}}),
+            new("Bank", new(){{"Silver",1000}}, new(){{"Silver",50}}),
+            new("Laboratory", new(){{"Silver",1000}}, new(){{"ComponentIndustrial",50}}),
+            new("Refinery", new(){{"Silver",1000}}, new(){{"Chemfuel",50}}),
+            new("Heral Workshop", new(){{"Silver",1000}}, new(){{"Potato",50}}),
+            new("Textile Factory", new(){{"Silver",1000}}, new(){{"Potato",50}}),
+            new("Food Processor", new(){{"Silver",1000}}, new(){{"Potato",50}})
+        };
+    }
+
+    public class PlayerSite
+    {
+        public PlayerSite(string name, Dictionary<string, int> cost, Dictionary<string, int> reward)
+        {
+            Name = name;
+            Cost = cost;
+            Reward = reward;
+        }
+        public string Name = "Site";
+        public Dictionary<string, int> Cost = new()
+        {
+            { "Silver", 100},
+            { "Steel", 100}
+        };
+        public Dictionary<string,int> Reward = new()
+        {
+            { "Silver", 5 }
+        };
     }
 }

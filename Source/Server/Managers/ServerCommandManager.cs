@@ -199,6 +199,10 @@ namespace GameServer
         private static readonly ServerCommand clearCommand = new ServerCommand("clear", 0,
             "Clears the console output",
             ClearCommandAction);
+        
+        private static readonly ServerCommand spawnThingCommand = new ServerCommand("spawn", 3,
+            "Spawn C amount of item B to player A",
+            SpawnThingCommandAction);
 
         public static readonly ServerCommand[] serverCommands = new ServerCommand[]
         {
@@ -234,7 +238,8 @@ namespace GameServer
             resetWorldCommand,
             quitCommand,
             forceQuitCommand,
-            clearCommand
+            clearCommand,
+            spawnThingCommand
         };
 
         private static void HelpCommandAction()
@@ -817,6 +822,26 @@ namespace GameServer
             Console.Clear();
 
             Logger.Title("[Cleared console]");
+        }
+
+        private static void SpawnThingCommandAction()
+        {
+            ServerClient toFind = Network.connectedClients.ToList().Find(x => x.userFile.Username == commandParameters[0]);
+            if (toFind == null) Logger.Warning($"User '{commandParameters[0]}' was not found");
+
+            else
+            {
+                int amount = 1;
+                if (int.TryParse(commandParameters[2], out amount))
+                {
+                    CommandManager.SpawnThingCommand(toFind, commandParameters[1], amount);
+                    Logger.Warning($"Sent {commandParameters[2]} {commandParameters[1]} to {toFind.userFile.Username}");
+
+                    return;
+                }
+
+                Logger.Warning($"Something went wrong, nothing sent.");
+            }
         }
     }
 }
