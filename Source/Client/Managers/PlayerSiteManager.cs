@@ -48,6 +48,8 @@ namespace GameClient
 
         public static void SpawnSingleSite(SiteData siteData)
         {
+            // TODO: fix that
+            /*
             if (ClientValues.isReadyToPlay)
             {
                 try
@@ -63,6 +65,7 @@ namespace GameClient
                 }
                 catch (Exception e) { Logger.Error($"Failed to spawn site at {siteData.tile}. Reason: {e}"); }
             }
+            */
         }
 
         public static void RemoveSingleSite(SiteData siteData)

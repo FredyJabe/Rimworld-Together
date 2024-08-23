@@ -11,7 +11,7 @@ namespace Shared
 
         public int tile;
 
-        public int type;
+        public string type;
 
         public string owner;
 

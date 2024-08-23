@@ -834,7 +834,7 @@ namespace GameServer
                 int amount = 1;
                 if (int.TryParse(commandParameters[2], out amount))
                 {
-                    CommandManager.SpawnThingCommand(toFind, commandParameters[1], amount);
+                    CommandManager.SpawnThingCommand(toFind, $"{commandParameters[1]}|{amount}");
                     Logger.Warning($"Sent {commandParameters[2]} {commandParameters[1]} to {toFind.userFile.Username}");
 
                     return;

@@ -76,6 +76,7 @@ namespace GameClient
             string message = "Received items from the server:\n\n";
             string[] thingsToSpawn = commandData.commandDetails.Split('/');
             List<Thing> things = new();
+            Dictionary<string,int> prettyThings = new();
 
             foreach(string s in thingsToSpawn)
             {
@@ -92,8 +93,15 @@ namespace GameClient
 
                     things.Add(ThingScribeManager.StringToItem(thingData));
 
-                    message += $"{thingData.defName} x{thingData.quantity}\n";
+                    if (prettyThings.ContainsKey(thingToSpawn.label)) prettyThings[thingToSpawn.label] += thingData.quantity;
+                    else prettyThings.Add(thingToSpawn.label, thingData.quantity);
                 }
+            }
+
+            foreach(KeyValuePair<string,int> r in prettyThings)
+            {
+                string label = char.ToUpper(r.Key[0]) + r.Key.Substring(1);
+                message += $"{label} x{r.Value}\n";
             }
 
             if (things.Count > 0)

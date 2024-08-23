@@ -92,7 +92,9 @@ namespace GameServer
                 file.tile = site.tile;
                 file.owner = site.owner;
                 file.goodwill = GoodwillManager.GetSiteGoodwill(client, site);
-                file.type = site.type;
+                // TODO: fix this
+                //file.type = site.type;
+                file.type = 0;
                 file.fromFaction = site.isFromFaction;
 
                 tempList.Add(file);

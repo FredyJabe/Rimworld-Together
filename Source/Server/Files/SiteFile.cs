@@ -7,7 +7,9 @@
 
         public string owner;
 
-        public int type;
+        public string type;
+        
+        public int limit;
 
         public byte[] workerData;
 

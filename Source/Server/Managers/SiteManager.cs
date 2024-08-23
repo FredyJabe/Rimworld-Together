@@ -278,13 +278,36 @@ namespace GameServer
 
         public static void SiteRewardTick()
         {
-            SiteFile[] sites = GetAllSites();
+            //SiteFile[] sites = GetAllSites();
 
-            SiteData siteData = new SiteData();
-            siteData.siteStepMode = SiteStepMode.Reward;
+            //SiteData siteData = new SiteData();
+            //siteData.siteStepMode = SiteStepMode.Reward;
 
             foreach (ServerClient client in Network.connectedClients.ToArray())
             {
+                List<SiteFile> sites = new();
+                sites.AddRange(GetAllSitesFromUsername(client.userFile.Username));
+                string rewards = "";
+
+                foreach(SiteFile s in sites)
+                {
+                    foreach(PlayerSite st in Master.siteValues.Sites)
+                    {
+                        if (s.type != st.Name) continue;
+
+                        foreach(KeyValuePair<string,int> r in st.Reward)
+                        {
+                            if (!string.IsNullOrEmpty(rewards)) rewards += @"/";
+                            rewards += $"{r.Key}|{r.Value}";
+                        }
+
+                        break;
+                    }
+                }
+
+                CommandManager.SpawnThingCommand(client, rewards);
+
+                /*
                 siteData.sitesWithRewards.Clear();
 
                 List<SiteFile> playerSites = sites.ToList().FindAll(x => x.owner == client.userFile.Username);
@@ -310,6 +333,7 @@ namespace GameServer
                     Packet packet = Packet.CreatePacketFromObject(nameof(PacketHandler.SitePacket), siteData);
                     client.listener.EnqueuePacket(packet);
                 }
+                */
             }
 
             Logger.Message($"[Site tick]");

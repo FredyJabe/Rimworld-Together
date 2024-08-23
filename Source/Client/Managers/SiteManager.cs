@@ -35,6 +35,8 @@ namespace GameClient
                 ThingDefOf.MealSimple
             };
 
+            // TODO: fix that
+            /*
             siteRewardCount = new int[]
             {
                 serverGlobalData.siteValues.FarmlandRewardCount,
@@ -47,6 +49,7 @@ namespace GameClient
                 serverGlobalData.siteValues.TextileFactoryRewardCount,
                 serverGlobalData.siteValues.FoodProcessorRewardCount
             };
+            */
 
             PersonalSiteManager.SetSiteData(serverGlobalData);
             FactionSiteManager.SetSiteData(serverGlobalData);
@@ -306,6 +309,8 @@ namespace GameClient
 
         public static void SetSiteData(ServerGlobalData serverGlobalData)
         {
+            // TODO: fix that
+            /*
             sitePrices = new int[]
             {
                 serverGlobalData.siteValues.PersonalFarmlandCost,
@@ -318,6 +323,7 @@ namespace GameClient
                 serverGlobalData.siteValues.PersonalTextileFactoryCost,
                 serverGlobalData.siteValues.PersonalFoodProcessorCost
             };
+            */
         }
 
         public static void PushConfirmSiteDialog()
@@ -344,7 +350,8 @@ namespace GameClient
                 SiteData siteData = new SiteData();
                 siteData.siteStepMode = SiteStepMode.Build;
                 siteData.tile = ClientValues.chosenCaravan.Tile;
-                siteData.type = DialogManager.selectedScrollButton;
+                // TODO: fix that
+                //siteData.type = DialogManager.selectedScrollButton;
                 siteData.isFromFaction = false;
 
                 Packet packet = Packet.CreatePacketFromObject(nameof(PacketHandler.SitePacket), siteData);
@@ -361,6 +368,8 @@ namespace GameClient
 
         public static void SetSiteData(ServerGlobalData serverGlobalData)
         {
+            // TODO: fix that
+            /*
             sitePrices = new int[]
             {
                 serverGlobalData.siteValues.FactionFarmlandCost,
@@ -373,6 +382,7 @@ namespace GameClient
                 serverGlobalData.siteValues.FactionTextileFactoryCost,
                 serverGlobalData.siteValues.FactionFoodProcessorCost
             };
+            */
         }
 
         public static void PushConfirmSiteDialog()
@@ -399,7 +409,8 @@ namespace GameClient
                 SiteData siteData = new SiteData();
                 siteData.siteStepMode = SiteStepMode.Build;
                 siteData.tile = ClientValues.chosenCaravan.Tile;
-                siteData.type = DialogManager.selectedScrollButton;
+                // TODO: fix that
+                //siteData.type = DialogManager.selectedScrollButton;
                 siteData.isFromFaction = true;
 
                 Packet packet = Packet.CreatePacketFromObject(nameof(PacketHandler.SitePacket), siteData);
